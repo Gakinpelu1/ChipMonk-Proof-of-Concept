@@ -163,8 +163,6 @@ test.describe('navigagte to the main page', () => {
     })
    
 
-
-
 })
 
 
