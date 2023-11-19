@@ -131,6 +131,7 @@ test.describe('navigagte to the main page and verify the links are operating', (
         if (await okayButton.isVisible()) {
         await okayButton.click()
         }
+        
         await page.getByRole('link', { name: 'KETO DARK CHOCOLATE CHIPS', exact:true }).click({force:true})
         //await page.getByLabel('KETO DARK CHOCOLATE CHIPS').click()
         await expect(page).toHaveURL('https://chipmonkbaking.com/products/allulose-sweetened-dark-chocolate-chips')
