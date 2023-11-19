@@ -1,44 +1,39 @@
 
-import { test, expect} from '@playwright/test';
+import { test, expect, BrowserContext} from '@playwright/test';
 
 
-test.describe('navigagte to the main page', () => {
+test.describe('navigagte to the main page and verify the links are operating', () => {
     test.beforeEach(async ({page}) => {
         await page.goto('https://chipmonkbaking.com/') 
         //await page.locator('.minimize-tolstoy-modal').click()     
-        await page.waitForTimeout(3000) 
-
-
+        await page.waitForTimeout(300)
+    
+        //if the video modal apprears, this will close it
         const videoModal = page.locator('.minimize-tolstoy-modal')
         if (await videoModal.isVisible()) {
         await videoModal.click()
         }
 
+        //If the "Okay" button/modal appears, this will close it
         const okayButton = page.getByRole('button', { name: 'Okay', exact:true  })
         if (await okayButton.isVisible()) {
         await okayButton.click()
-        }
-    
+        }  
     })
-    
-    /*test('it should verify the title and url', async ({page}) => {
-       
-    //verify the title
-    await expect(page).toHaveTitle('Low Carb Gluten Free Keto Cookies, Desserts, Sweetener & Baking Mixes — ChipMonk Baking')
-        
-    })*/
-    test('it should verify key elements on the  main page', async ({page}) => {
+
+ //VERIFY THE MAIN COMPONENTS ON THE LANDING PAGE
+    test('it should verify key components on the landing page', async ({page}) => {
         //Verify Header text
         await expect (page.getByRole('heading', { name: 'ALL THE TASTE NONE OF THE SUGAR' })).toBeVisible()
-        //Verify top Site Nave is visible
+        //Verify top Site Navigation Bar is visible
         await expect (page.locator('#SiteNav')).toBeVisible()
         //Verify the reviews banner is visible in the middle of the page
         await expect (page.locator('.total-reviews-container')).toBeVisible()
         //Verify the Shopify section is visible
         await expect (page.locator('#shopify-section-1595948356137')).toBeVisible()
-        //Verify video is visible
+        //Verify the pop-up video is visible
         await expect (page.locator('.video__image')).toBeVisible()
-        //verify the table is visible
+        //verify the nutrition table is visible
         await expect(page.locator('.comparison--table')).toBeVisible()
         //verify newsletter section is visible
         await expect(page.locator('.newsletter-section')).toBeVisible()
@@ -46,11 +41,10 @@ test.describe('navigagte to the main page', () => {
         await expect(page.getByText('START SHOPPING')).toBeVisible()
         //verify the footer is visible
         await expect(page.locator('#shopify-section-footer')).toBeVisible()
-
         })
 
 
-    test('it should click on the Cookies link in the main nav to get to Keto Cookies', async ({page}) => {
+    test('it should click on the Cookies link in the main nav bar to get to Keto Cookies', async ({page}) => {
         await page.getByRole('button', { name: 'COOKIES', exact:true }).click({force:true})
         //click on the okay button if it appears
         const okayButton = page.getByRole('button', { name: 'Okay', exact:true  })
@@ -84,7 +78,6 @@ test.describe('navigagte to the main page', () => {
         //click on Keto Cookies link
         await page.getByRole('link', { name: 'GLUTEN FREE COOKIES', exact:true }).click({force:true})
         await expect(page).toHaveURL('https://chipmonkbaking.com/products/gluten-free-cowboy-cookies')
-
     })
 
     test('it should click on the Cookies link in the main nav to get to Cookie Bites', async ({page}) => {
@@ -113,18 +106,11 @@ test.describe('navigagte to the main page', () => {
     test('it should click on the Home Baking link in the main nav to get to Dry Mixes', async ({page}) => {
         //click on Home Baking
         await page.getByRole('button', { name: 'HOME BAKING', exact:true }).click({force:true})
-        //click on the okay button if it appears
-        //const okayButton = page.getByRole('button', { name: 'Okay', exact:true  })
-        //f (await okayButton.isVisible()) {
-        //await okayButton.click()
-        //}
         await page.waitForTimeout(3000) 
         await page.getByRole('link', { name: 'DRY MIXES', exact:true }).click({force:true})
-        //await page.getByLabel('DRY MIXES').click()
-
-        
         await expect(page).toHaveURL('https://chipmonkbaking.com/products/ketocookiemixes')
     })
+
     test('it should click on the Home Baking link in the main nav to get to Sweeteners', async ({page}) => {
          //click on Home Baking
          await page.getByRole('button', { name: 'HOME BAKING', exact:true }).click({force:true})

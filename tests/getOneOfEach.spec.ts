@@ -10,6 +10,10 @@ test.describe('This will grab one of each item available', async () => {
         if (await videoModal.isVisible()) {
         await videoModal.click()
         }
+        const okayButton = page.getByRole('button', { name: 'Okay', exact:true  })
+        if (await okayButton.isVisible()) {
+        await okayButton.click()
+        }
     })
     
     test('it should make a one-time purchase and add the card all available items', async ({page})=> {
@@ -35,7 +39,6 @@ test.describe('This will grab one of each item available', async () => {
         await expect(page.locator('.rebuy-cart__flyout')).toBeVisible()
     })
        
-
          //****BUY PROTEIN COOKIES
 
     test('should put some Protein cookies in the cart', async ({page})=> {
@@ -62,10 +65,11 @@ test.describe('This will grab one of each item available', async () => {
         await page.waitForTimeout(3000) 
         //cart flyout should be visible
         await expect(page.locator('.rebuy-cart__flyout')).toBeVisible()
-        //click on Continue Shopping button
-
+        //Verify the item has been placed in the cart
+        await expect(page.getByText('Subtotal (1 item)')).toBeVisible()
         })
 
+    //ADD SOME GLUTEN FREE COOKIES TO THE CART         
     test('it should add aome Gluten Free Cookies to the cart', async ({page})=> {
         //****BUY GLUTEN FREE COOKIES
         await page.waitForTimeout(3000)
@@ -81,9 +85,11 @@ test.describe('This will grab one of each item available', async () => {
         await page.waitForTimeout(3000) 
         //cart flyout should be visible
         await expect(page.locator('.rebuy-cart__flyout')).toBeVisible()
-
+         //Verify the item has been placed in the cart
+         await expect(page.getByText('Subtotal (1 item)')).toBeVisible()
     })
 
+    //ADD SOME KETO COOKIES TO THE CART
     test('it should add some Keto Cookie bites to the cart', async ({page}) => {
         //Buy some Cookie /Bites
         await page.getByRole('link', { name: 'COOKIE BITES', exact:true }).click({force:true})
@@ -99,13 +105,16 @@ test.describe('This will grab one of each item available', async () => {
          await page.getByRole('button', {name: 'ADD TO CART'}).click({force:true})
          //cart flyout should be visible
          await expect(page.locator('.rebuy-cart__flyout')).toBeVisible()
+          //Verify the item has been placed in the cart
+        await expect(page.getByText('Subtotal (1 item)')).toBeVisible()
     })
 
+    //ADD SOME COOKIE BUNDLES TO THE CART
     test('it should add some Bundles to the cart', async ({page}) => {
         //Buy some random Bundle 
         await page.getByRole('link', { name: 'BUNDLES', exact:true }).click({force:true})
          await page.waitForTimeout(3000) 
-         //Pick Your (random) Bundle
+         //Pick Your random) Bundle
          await page.locator('.grid-view-item__image-wrapper').nth(Math.floor(Math.random()* 6)).click({force:true})
 
          const needClickButton = page.locator('#title-Close')
@@ -183,20 +192,60 @@ test.describe('This will grab one of each item available', async () => {
             //cart flyout should be visible
             await page.waitForTimeout(3000)
             await expect(page.locator('.rebuy-cart__flyout')).toBeVisible()}
-            
-         
+             //Verify the item has been placed in the cart
+            await expect(page.getByText('Subtotal (1 item)')).toBeVisible()     
     })
-
-
 
         //*************Buy Home Baking things*************
 
+    test('it should make a one-time purchase of the Dry Mixes', async ({page})=> {
 
-        //*************Verify Cart items*************
+        await page.getByRole('button', { name: 'HOME BAKING', exact:true }).click({force:true})
+        await page.waitForTimeout(3000) 
+        //click on Dry Mixes link
+        await page.getByRole('link', { name: 'Keto Cookies Dry Mixes' }).click()
+        await page.locator('.swatch-element').nth(Math.floor(Math.random()* 4)).click({force:true})
+        //choose random Delivery
+        await page.locator('#selling_plan_5452008358047').selectOption({ index:(Math.floor(Math.random()* 3))})
+        ///choose One-time purchase
+        await page.getByText('One-time purchase', {exact:true}).click({force:true})
+        await page.getByRole('button', {name: 'ADD TO CART'}).click({force:true})
+        await page.waitForTimeout(3000) 
+        //cart flyout should be visible
+        await expect(page.locator('.rebuy-cart__flyout')).toBeVisible()
+        await expect(page.getByText('Subtotal (1 item)')).toBeVisible()
+        })
 
-        //*************Verify total*************
+    test('it should mae a one-time purchase of Sweetener', async ({page})=> {
 
+        await page.getByRole('button', { name: 'HOME BAKING', exact:true }).click({force:true})
+        await page.waitForTimeout(3000) 
+        //click on Sweetener link
+        await page.getByRole('link', { name: 'SWEETENER', exact: true }).click()
+        //await page.locator('.swatch-element').nth(Math.floor(Math.random()* 4)).click({force:true})
+        //choose random Delivery
+        await page.locator('#selling_plan_5452007047327').selectOption({ index:(Math.floor(Math.random()* 3))})
+        ///choose One-time purchase
+        await page.getByText('One-time purchase', {exact:true}).click({force:true})
+        await page.getByRole('button', {name: 'ADD TO CART'}).click({force:true})
+        await page.waitForTimeout(3000) 
+        //cart flyout should be visible
+        await expect(page.locator('.rebuy-cart__flyout')).toBeVisible()
+        await expect(page.getByText('Subtotal (1 item)')).toBeVisible()
+        })
+    
+    test('it should mae a one-time purchase of Keto Dark Chocolate Chips', async ({page})=> {
 
+        await page.getByRole('button', { name: 'HOME BAKING', exact:true }).click({force:true})
+        await page.waitForTimeout(3000) 
+        //click on Sweetener link
+        await page.getByRole('link', { name: 'KETO DARK CHOCOLATE CHIPS', exact: true }).click()
+        await page.getByRole('button', {name: 'ADD TO CART'}).click({force:true})
+        await page.waitForTimeout(3000) 
+        //cart flyout should be visible
+        await expect(page.locator('.rebuy-cart__flyout')).toBeVisible()
+        await expect(page.getByText('Subtotal (1 item)')).toBeVisible()
+        })
 
     })
 

@@ -34,7 +34,8 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Chrome'],
+      launchOptions:{slowMo:500,} },
     },
 
     {
@@ -44,7 +45,8 @@ export default defineConfig({
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: { ...devices['Desktop Safari'],
+      launchOptions:{slowMo:300,} },
     },
 
     /* Test against mobile viewports. */
