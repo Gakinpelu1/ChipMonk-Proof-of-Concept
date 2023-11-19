@@ -187,7 +187,6 @@ test.describe('This will grab one of each item available', async () => {
             await expect(page.locator('.rebuy-cart__flyout')).toBeVisible()    
             } else if
             (await nineFlavorsBundle.isVisible()){
-            
             await page.getByRole('button', {name: 'ADD TO CART'}).nth(1).click({force:true})
             //cart flyout should be visible
             await page.waitForTimeout(3000)
